@@ -1,4 +1,4 @@
-#include <array>
+#include <vector>
 #include <algorithm>
 #include <numeric> 
 #include <fstream>
@@ -7,10 +7,9 @@
 using namespace std;
 
 constexpr size_t DAYS = 30;
-using Arr = array<int, DAYS>;
 
 int main(){
-    Arr steps{};
+    vector<int> steps(DAYS);
     ifstream fin("steps.txt");
     if (!fin) { 
         cerr << "Can't open steps.txt\n"; 
@@ -18,7 +17,10 @@ int main(){
     }
 
     for (size_t i = 0; i < steps.size(); ++i) {
-        if (!(fin >> steps[i])) { cerr << "Not enough numbers\n"; return 1; }
+        if (!(fin >> steps[i])) { 
+            cerr << "Not enough numbers\n"; 
+            return 1; 
+        }
     }
 
     cout << "Size = " << steps.size() << " days. First=" << steps.front() << " Last=" << steps.back() << "\n";
@@ -30,10 +32,8 @@ int main(){
     }
 
     int looking = 6899;
-    array<int, DAYS>::iterator it;
-    it = find(steps.begin(), steps.end(), looking);
+    auto it = find(steps.begin(), steps.end(), looking);
     cout << "Find: " << looking;
-
     if (it != steps.end())
         cout << " found in position " << it - steps.begin() << endl;
     else
